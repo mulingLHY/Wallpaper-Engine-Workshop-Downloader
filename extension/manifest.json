@@ -1,0 +1,35 @@
+{
+  "manifest_version": 2,
+  "name": "Wallpaper Engine Workshop Downloader",
+  "description": "Download Wallpaper Engine workshop projects and auto extract.(api from steamworkshopdownloader.io)",
+  "version": "0.0.1",
+  "icons": {
+    "96": "icons/icon.png"
+  },
+  "homepage_url": "https://steamcommunity.com/app/431960/workshop/",
+  "content_scripts": [
+    {
+      "matches": [
+        "*://steamcommunity.com/sharedfiles/filedetails/?id=*",
+        "*://steamcommunity.com/workshop/filedetails/?id=*"
+      ],
+      "js": ["userscript.js"]
+    },
+    {
+      "matches": [
+        "*://steamcommunity.com/sharedfiles/filedetails/?id=*",
+        "*://steamcommunity.com/workshop/filedetails/?id=*"
+      ],
+      "js": ["jquery.min.js"]
+    }
+  ],
+  "background":{
+      "scripts":["background.js"]
+  },
+  "permissions": [
+    "*://steamcommunity.com/sharedfiles/filedetails/?id=*",
+    "*://steamcommunity.com/workshop/filedetails/?id=*",
+    "downloads",
+    "nativeMessaging"
+  ]
+}
