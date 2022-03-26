@@ -156,9 +156,10 @@ function isWallpaperEngineWorkshop(){
 }
 function sendIdMessage(){
   let id = document.URL.match(/id\=([0-9]*)/)[1]
+  let title = document.querySelector(".workshopItemTitle").textContent
   if(id == null)return;
 
-  chrome.runtime.sendMessage({id: id}, function(response) {
+  chrome.runtime.sendMessage({id: id, name:title}, function(response) {
   });
 }
 
@@ -170,6 +171,7 @@ function sendIdMessage(){
     // Only neccesary when ran as a userscript: keep retrying until jQuery is available from the page headers.
     if (typeof jQuery === "undefined") {
       setTimeout(load, 50);
+      return
     }
 
     if (getPageType() == null) {

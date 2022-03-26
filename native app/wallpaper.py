@@ -39,15 +39,19 @@ def read_thread_func():
       send_message(e)
 
 def extractProject(path, id):
-  folder_abs = os.path.abspath('projects/myprojects/'+str(id))
-  
-  zip_file = zipfile.ZipFile(path)
-  zip_list = zip_file.namelist() # 得到压缩包里所有文件
+  try:
+    folder_abs = os.path.abspath('projects/myprojects/'+str(id))
+    
+    zip_file = zipfile.ZipFile(path)
+    zip_list = zip_file.namelist() # 得到压缩包里所有文件
 
-  for f in zip_list:
-      zip_file.extract(f, folder_abs) # 循环解压文件到指定目录
-  
-  zip_file.close()
+    for f in zip_list:
+        zip_file.extract(f, folder_abs) # 循环解压文件到指定目录
+    
+    zip_file.close()
+    send_message(json.dumps({"id":id,"success":1}))
+  except Exception as e:
+    send_message(json.dumps({"id":id, "success":0, "error":str(e)}))
   pass
 
 def browserStart():

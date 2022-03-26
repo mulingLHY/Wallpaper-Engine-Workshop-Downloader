@@ -31,5 +31,11 @@
     "*://steamcommunity.com/workshop/filedetails/?id=*",
     "downloads",
     "nativeMessaging"
-  ]
+  ],
+	"browser_action":
+	{
+		"default_icon": "icons/icon.png",
+		"default_title": "Wallpaper Engine Workshop Downloader",
+		"default_popup": "popup.html"
+	}
 }
