@@ -1,8 +1,6 @@
 import struct
 import sys
-import threading
 import json
-import time
 import zipfile
 import os
 
@@ -20,7 +18,7 @@ def send_message(message):
   sys.stdout.buffer.write(struct.pack(str(len(message.encode("utf-8")))+"s", message.encode("utf-8")))
   sys.stdout.flush()
 
-def read_thread_func():
+def read_loop_func():
   while True:
     try:
       # Read the message length (first 4 bytes).
@@ -36,7 +34,7 @@ def read_thread_func():
       info = json.loads(text)
       extractProject(info['path'], info['id'])
     except Exception as e:
-      send_message(e)
+      send_message(json.dumps({"success":0, "error":str(e)}))
 
 def extractProject(path, id):
   try:
@@ -56,13 +54,7 @@ def extractProject(path, id):
 
 def browserStart():
   send_message(json.dumps(sys.argv))
-  thread = threading.Thread(target=read_thread_func)
-  thread.daemon = True
-  thread.start()
-
-  while True:
-    time.sleep(500) 
-    pass
+  read_loop_func()
 
 def userStart():
   while True:
